@@ -1,0 +1,4 @@
+Pillow
+qrcode[pil]
+python-Levenshtein
+pywin32
