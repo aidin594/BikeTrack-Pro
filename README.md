@@ -29,7 +29,7 @@ The application stores customer records in a local SQLite database. **Do not upl
 ## Notes
 
 - `icon.ico` is optional and not included in this source package.
-- This is an initial source release, not a packaged Windows installer.
+- GitHub Actions builds a standalone Windows EXE on pushes to `main`. Find the `BikeTrack-Pro-Windows` artifact under the latest successful run in the Actions tab.\n- The EXE is an application build, not a Windows installer; it has not been validated against shop printers.
 - Windows-only printing relies on `pywin32`.
 - Source syntax has been checked; Windows GUI and printer behavior have not been tested as part of this package.
 
