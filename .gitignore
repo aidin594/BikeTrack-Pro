@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+
+# Customer records / SQLite (never commit)
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.sqlite3-*
+*.db3
+*.db3-*
+*.bak
+*.backup
+
+# Local configuration and personal data
+local_settings.json
+settings.json
+.env
+.env.*
+!.env.example
+backup_db/
+backups/
+*.csv
+*.xlsx
+*.xls
+
+# Build and runtime
+build/
+dist/
+*.exe
+*.spec
+*.log
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
