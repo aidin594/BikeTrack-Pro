@@ -3042,7 +3042,7 @@ ENGLISH_TEXT = {'window_title': 'BikeTrack Pro',
                'Version 5.96\n'
                'Developed by Aidin594\n'
                'Girra Sweden AB\n'
-               'Email: info@girra.se\n'
+               'Email: info@vhcyklar.se\n'
                '\n'
                'A simple tool to track bike shop customers, manage records, and print receipts efficiently.',
  'help_title': 'Help',
@@ -5222,7 +5222,7 @@ def open_settings(update: bool=False) -> None:
         prefix = _receipt_kind_prefix(prefix or _current_receipt_tab_prefix())
         preview_after_ids[prefix] = None
         try:
-            sample_data = [datetime.now().strftime('%Y-%m-%d %H:%M'), '0701234567', 'Skeppshult Svart Damcykel', 'Punktering bakhjul', 'Bromsen låter', 'Justera växlar'] + [''] * 7 + ['Ring kunden innan reparation.']
+            sample_data = [datetime.now().strftime('%Y-%m-%d %H:%M'), '0700000000', 'Skeppshult Svart Damcykel', 'Punktering bakhjul', 'Bromsen låter', 'Justera växlar'] + [''] * 7 + ['Ring kunden innan reparation.']
             preview_settings = _collect_preview_settings()
             img = build_receipt_image_gdi(sample_data, preview_settings, prefix)
             widgets = preview_widgets[prefix]
@@ -5263,7 +5263,7 @@ def open_settings(update: bool=False) -> None:
         prefix = _receipt_kind_prefix(prefix or _current_receipt_tab_prefix())
         try:
             preview_settings = _collect_preview_settings()
-            sample_data = [datetime.now().strftime('%Y-%m-%d %H:%M'), '0701234567', 'Skeppshult Svart Damcykel', 'Punktering bakhjul', 'Bromsen låter', 'Justera växlar'] + [''] * 7 + ['Ring kunden innan reparation.']
+            sample_data = [datetime.now().strftime('%Y-%m-%d %H:%M'), '0700000000', 'Skeppshult Svart Damcykel', 'Punktering bakhjul', 'Bromsen låter', 'Justera växlar'] + [''] * 7 + ['Ring kunden innan reparation.']
             image = build_receipt_image_gdi(sample_data, preview_settings, prefix)
             printer_name = customer_printer_combo.get().strip() if prefix == 'customer' else shop_printer_combo.get().strip()
             if not printer_name:
@@ -5444,7 +5444,7 @@ def open_about(update: bool=False) -> None:
         'Customer and workshop receipt printing'
     )
     ttk.Label(panel, text=details, justify='left', wraplength=460).pack(anchor='w')
-    ttk.Label(panel, text='Contact: info@girra.se').pack(anchor='w', pady=(12, 0))
+    ttk.Label(panel, text='Contact: info@vhcyklar.se').pack(anchor='w', pady=(12, 0))
 
     link = ttk.Label(panel, text='GitHub: aidin594/BikeTrack-Pro',
                      foreground='#0969da', cursor='hand2')
