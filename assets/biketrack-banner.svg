@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="t d">
+<title id="t">BikeTrack Pro</title><desc id="d">Bicycle workshop management application for Windows</desc>
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#101f37"/><stop offset="1" stop-color="#163d5b"/></linearGradient></defs>
+<rect width="1200" height="360" rx="22" fill="url(#bg)"/>
+<g stroke="#8bd6d1" stroke-width="8" fill="none" opacity=".95"><circle cx="890" cy="240" r="65"/><circle cx="1080" cy="240" r="65"/><path d="M890 240l70-110 55 110H890l40-76h90l60 76m-130-125h44m-6 5l25 44"/></g>
+<g fill="#fff" font-family="Arial,Helvetica,sans-serif"><text x="75" y="135" font-size="66" font-weight="700">BikeTrack Pro</text><text x="79" y="188" font-size="26" fill="#a9d6e9">Bicycle workshop management for Windows</text></g>
+<g font-family="Arial,Helvetica,sans-serif" font-size="17" fill="#d9e9f2"><text x="80" y="279">REPAIR TRACKING</text><text x="285" y="279">VISIT HISTORY</text><text x="460" y="279">RECEIPT PRINTING</text></g>
+<g fill="#8bd6d1"><circle cx="68" cy="273" r="4"/><circle cx="273" cy="273" r="4"/><circle cx="448" cy="273" r="4"/></g>
+</svg>
