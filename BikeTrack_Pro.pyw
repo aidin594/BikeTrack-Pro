@@ -5408,29 +5408,152 @@ def open_settings(update: bool=False) -> None:
     settings_window.protocol('WM_DELETE_WINDOW', _close_settings_window)
 
 def open_about(update: bool=False) -> None:
-    """Open the about window."""
+    """Show application details in a self-contained About dialog."""
     global about_window
-    text = ENGLISH_TEXT
-    if about_window and tk.Toplevel.winfo_exists(about_window) and (not update):
-        about_window.lift()
-        return
-    if update and about_window:
-        about_window.destroy()
-    about_window = tk.Toplevel(root)
-    about_window.title(text['about_title'])
-    about_window.resizable(False, False)
-    set_window_icon(about_window)
-    tk.Label(about_window, text=text['about_text'], padx=20, pady=20).pack()
-    about_window.protocol('WM_DELETE_WINDOW', lambda: about_window.destroy() or globals().update(about_window=None))
+    if about_window is not None:
+        try:
+            if about_window.winfo_exists():
+                if update:
+                    about_window.destroy()
+                else:
+                    about_window.lift()
+                    about_window.focus_set()
+                    return
+        except tk.TclError:
+            pass
+
+    dialog = tk.Toplevel(root)
+    about_window = dialog
+    dialog.title('About BikeTrack Pro')
+    dialog.geometry('520x365')
+    dialog.minsize(440, 330)
+    dialog.resizable(True, True)
+    set_window_icon(dialog)
+
+    panel = ttk.Frame(dialog, padding=24)
+    panel.pack(fill='both', expand=True)
+    ttk.Label(panel, text='BikeTrack Pro', font=('Segoe UI', 23, 'bold')).pack(anchor='w')
+    ttk.Label(panel, text='Bicycle workshop management for Windows',
+              font=('Segoe UI', 10)).pack(anchor='w', pady=(2, 16))
+    ttk.Separator(panel).pack(fill='x', pady=(0, 14))
+    details = (
+        'Version 5.96 (source version)\n'
+        'Developed by Aidin594\n'
+        'Girra Sweden AB\n'
+        'Customer records • Repair tracking • Visit history\n'
+        'Customer and workshop receipt printing'
+    )
+    ttk.Label(panel, text=details, justify='left', wraplength=460).pack(anchor='w')
+    ttk.Label(panel, text='Contact: info@girra.se').pack(anchor='w', pady=(12, 0))
+
+    link = ttk.Label(panel, text='GitHub: aidin594/BikeTrack-Pro',
+                     foreground='#0969da', cursor='hand2')
+    link.pack(anchor='w', pady=(4, 0))
+    link.bind('<Button-1>', lambda event: webbrowser.open(
+        'https://github.com/aidin594/BikeTrack-Pro'))
+
+    def close_dialog():
+        global about_window
+        about_window = None
+        dialog.destroy()
+
+    ttk.Button(panel, text='Close', command=close_dialog).pack(side='bottom', anchor='e', pady=(15, 0))
+    dialog.protocol('WM_DELETE_WINDOW', close_dialog)
+
 
 def open_help(update: bool=False) -> None:
-    """Open the help documentation in the default web browser."""
-    help_file = 'help.html'
-    if os.path.exists(help_file):
-        webbrowser.open(help_file)
-    else:
-        text = ENGLISH_TEXT
-        messagebox.showerror('Error', 'Help documentation not found.')
+    """Show built-in help without requiring an external help.html file."""
+    global help_window
+    if help_window is not None:
+        try:
+            if help_window.winfo_exists():
+                if update:
+                    help_window.destroy()
+                else:
+                    help_window.lift()
+                    help_window.focus_set()
+                    return
+        except tk.TclError:
+            pass
+
+    dialog = tk.Toplevel(root)
+    help_window = dialog
+    dialog.title('BikeTrack Pro - Help')
+    dialog.geometry('760x610')
+    dialog.minsize(560, 420)
+    set_window_icon(dialog)
+
+    container = ttk.Frame(dialog, padding=12)
+    container.pack(fill='both', expand=True)
+    ttk.Label(container, text='BikeTrack Pro Help',
+              font=('Segoe UI', 17, 'bold')).pack(anchor='w', pady=(0, 5))
+    ttk.Label(container, text='Quick guide to the main functions. All help is available offline.',
+              wraplength=700).pack(anchor='w', pady=(0, 12))
+
+    notebook = ttk.Notebook(container)
+    notebook.pack(fill='both', expand=True)
+
+    topics = [
+        ('Getting started',
+         '1. Enter the customer phone number and the bicycle model.\n'
+         '2. Type a repair issue and press Enter or click + Add.\n'
+         '3. Repeat for additional repairs (up to 10).\n'
+         '4. Click Save or press Ctrl+S to save the visit.\n'
+         '5. Use Bike List to find, edit, or manage saved records.\n\n'
+         'Tip: Test printing and printer settings before using the application for live jobs.'),
+        ('Repairs & history',
+         'Add issues using the repair field on the main window.\n'
+         'Select an issue and use Edit, Remove, Up, or Down to manage it.\n'
+         'Double-click an issue to edit it.\n\n'
+         'Enter a phone number to see previous visits. The visit history can help you '
+         'reuse an existing bicycle model. Use Bike List for the full list of records.\n\n'
+         'You can mark customer numbers using the customer flag functions.'),
+        ('Receipts & notes',
+         'The Shop Note field is intended for internal workshop information. '
+         'It is printed only on the shop receipt, not the customer receipt.\n\n'
+         'Configure Customer Printer and Shop Printer separately in Settings.\n'
+         'Printing requires compatible Windows printer drivers.\n'
+         'Check a test receipt before relying on it for customer orders.\n\n'
+         'Printer selection is stored locally for each Windows computer.'),
+        ('Settings & backups',
+         'Open Settings from the main menu to configure receipt layouts, '
+         'printers, backup location and other available options.\n\n'
+         'The application stores customer visits in a local SQLite database '
+         '(customer_bikes.db, beside the application).\n'
+         'Make regular backups and keep a copy outside the program folder.\n'
+         'Do not upload real customer databases or local settings to GitHub.'),
+        ('Troubleshooting',
+         'Application does not start:\n'
+         '  Check whether Windows security blocked the downloaded EXE.\n\n'
+         'Receipts do not print:\n'
+         '  Confirm the correct printers are selected in Settings, then test Windows printing.\n\n'
+         'Visit history seems empty:\n'
+         '  Check the entered phone number and the saved records in Bike List.\n\n'
+         'Database is locked:\n'
+         '  Wait for another database operation to finish before retrying.\n\n'
+         'Project: https://github.com/aidin594/BikeTrack-Pro'),
+    ]
+    for heading, body in topics:
+        page = ttk.Frame(notebook, padding=12)
+        notebook.add(page, text=heading)
+        scrollbar = ttk.Scrollbar(page, orient='vertical')
+        scrollbar.pack(side='right', fill='y')
+        viewer = tk.Text(page, wrap='word', font=('Segoe UI', 10),
+                         padx=12, pady=12, borderwidth=0,
+                         yscrollcommand=scrollbar.set)
+        viewer.pack(side='left', fill='both', expand=True)
+        scrollbar.configure(command=viewer.yview)
+        viewer.insert('1.0', body)
+        viewer.configure(state='disabled')
+
+    def close_dialog():
+        global help_window
+        help_window = None
+        dialog.destroy()
+
+    ttk.Button(container, text='Close', command=close_dialog).pack(anchor='e', pady=(10, 0))
+    dialog.protocol('WM_DELETE_WINDOW', close_dialog)
+
 
 def rebuild_main_menu() -> None:
     """Rebuild the main menu from scratch so labels never shift or duplicate after settings changes."""
