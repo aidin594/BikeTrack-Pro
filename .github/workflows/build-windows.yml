@@ -16,10 +16,10 @@ jobs:
     timeout-minutes: 25
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
           cache: pip
@@ -39,7 +39,7 @@ jobs:
           python -m PyInstaller --noconfirm --clean --onefile --windowed --name BikeTrack-Pro --hidden-import win32timezone BikeTrack_Pro.pyw
 
       - name: Upload Windows executable
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: BikeTrack-Pro-Windows
           path: dist/BikeTrack-Pro.exe
